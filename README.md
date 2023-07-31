@@ -1,4 +1,4 @@
-# serious-sql
+# Serious SQL
 
 Serious SQL is one of the courses in the Data With Danny Virtual Data Apprenticeship Program.
 
