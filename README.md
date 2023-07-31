@@ -33,8 +33,14 @@ With the Health Analytics Mini Case Study, I queried data to bring insights to t
 
 ### 🚀 Solutions
 
+**How many `unique users` exist in the logs dataset?**
+
 ```sql
 SELECT
   COUNT(DISTINCT id) AS unique_users
 FROM health.user_logs;
 ```
+
+|unique_users                            |
+|----------------------------------------|
+|554                                     |
