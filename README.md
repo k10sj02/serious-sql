@@ -186,6 +186,10 @@ FROM user_measure_count
 WHERE measure_count >= 1000;
 ```
 
+|count                                   |
+|----------------------------------------|
+|5                                       |
+
 This SQL query calculates the count of rows in the `user_measure_count` temporary table where the value in the `measure_count` column is greater than or equal to 1000. Let's break down the query:
 
 1. `SELECT`: This keyword is used to specify the result you want to retrieve from the database.
@@ -198,7 +202,7 @@ This SQL query calculates the count of rows in the `user_measure_count` temporar
 
 When you execute this SQL query, it will return a single value, which represents the count of rows in the `user_measure_count` temporary table that have a value of `measure_count` greater than or equal to 1000. The query is useful for finding the number of users in the `user_measure_count` table who have at least 1000 measures recorded in the `health.user_logs` table.
 
-**6. Have logged `blood glucose` measurements?**
+**6. How many users have logged `blood glucose` measurements?**
 
 ```sql
 SELECT COUNT(DISTINCT id)
@@ -206,7 +210,11 @@ FROM health.user_logs
 WHERE measure = 'blood_glucose';
 ```
 
-**7. Have `at least 2 types` of measurements?**
+|count                                   |
+|----------------------------------------|
+|325                                     |
+
+**7. How many users have `at least 2 types` of measurements?**
 
 ```sql
 SELECT
@@ -215,7 +223,12 @@ FROM user_measure_count
 WHERE unique_measures >= 2;
 ```
 
-**8. Have all 3 measures - `blood glucose`, `weight` and `blood pressure`?**
+|count                                   |
+|----------------------------------------|
+|204                                     |
+
+
+**8. How many users have all 3 measures - `blood glucose`, `weight` and `blood pressure`?**
 
 ```sql
 SELECT
@@ -223,6 +236,9 @@ SELECT
 FROM user_measure_count
 WHERE unique_measures = 3;
 ```
+|count                                   |
+|----------------------------------------|
+|50                                      |
 
 **9. What is the `median systolic/diastolic` `blood pressure` values?**
 
@@ -233,3 +249,16 @@ SELECT
 FROM health.user_logs
 WHERE measure = 'blood_pressure';
 ```
+|median_systolic|median_diastolic|
+|---------------|----------------|
+|126            |79              |
+---
+
+## 💻 Key Highlight
+> **Initial thoughts:** 
+
+Some of the main areas covered in this case study, including:
+* **Sorting Values**
+* **Inspect Row Counts** 
+* **Duplicates & Record Frequency Review**
+* **Summary Statistics** `(MEAN, MEDIAN)`
