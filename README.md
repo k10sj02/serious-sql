@@ -137,6 +137,10 @@ SELECT
 FROM user_measure_count;
 ```
 
+|median_value                            |
+|----------------------------------------|
+|2                                       |
+
 This SQL query calculates the median value of the measure_count column from the user_measure_count temporary table using the PERCENTILE_CONT function. Let's break down the query:
 
 `SELECT`: This keyword is used to specify the column or expression that you want to retrieve from the database.
