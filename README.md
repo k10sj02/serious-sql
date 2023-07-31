@@ -129,3 +129,23 @@ This SQL query calculates the rounded mean (average) of the measure_count column
 
 When you execute this SQL query, it will return a single row with one column, `rounded_mean`, representing the rounded mean (average) of the measure_count column from the user_measure_count temporary table.
 
+**3. What about the `median` number of measurements per user?**
+
+```sql
+SELECT
+  PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY measure_count) AS median_value
+FROM user_measure_count;
+```
+
+This SQL query calculates the median value of the measure_count column from the user_measure_count temporary table using the PERCENTILE_CONT function. Let's break down the query:
+
+`SELECT`: This keyword is used to specify the column or expression that you want to retrieve from the database.
+
+`PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY measure_count)`: This is a window function in SQL that calculates the continuous percentile of a specified column (measure_count in this case). When PERCENTILE_CONT is called with an argument of 0.5, it calculates the median value.
+
+`AS median_value`: This renames the result of the PERCENTILE_CONT function to median_value, which will be the name of the output column.
+
+`FROM user_measure_count`: This specifies the source table user_measure_count from which the data should be retrieved.
+
+When you execute this SQL query, it will return a single row with one column, `median_value`, representing the median value of the `measure_count` column from the `user_measure_count` temporary table. The median is the middle value of the sorted `measure_count` values when there is an odd number of rows, and it is the average of the two middle values when there is an even number of rows.
+
