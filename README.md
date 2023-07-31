@@ -114,3 +114,18 @@ FROM
 |rounded_mean                            |
 |----------------------------------------|
 |79                                      |
+
+This SQL query calculates the rounded mean (average) of the measure_count column from the user_measure_count temporary table. Here's a breakdown of the query:
+
+`SELECT`: This keyword is used to specify the columns or expressions that you want to retrieve from the database.
+
+`ROUND`: This is a mathematical function in SQL that rounds a numeric value to a specified number of decimal places. In this query, it will round the average value of `measure_count` to the nearest whole number.
+
+`AVG(measure_count)`: This is an aggregate function that calculates the average value of the `measure_count` column in the `user_measure_count` table. It adds up all the values in the measure_count column and divides the sum by the number of rows.
+
+`AS rounded_mean`: This renames the result of the rounded mean calculation to `rounded_mean`, which will be the name of the output column.
+
+`FROM user_measure_count`: This specifies the source table `user_measure_count` from which the data should be retrieved.
+
+When you execute this SQL query, it will return a single row with one column, `rounded_mean`, representing the rounded mean (average) of the measure_count column from the user_measure_count temporary table.
+
