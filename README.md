@@ -101,3 +101,16 @@ FROM health.user_logs: This specifies the table health.user_logs from which the 
 `GROUP BY 1;`: This groups the results by the first column in the select list, which is id in this case. It means that the count results are calculated for each unique id value, so you get counts specific to each user.
 
 After executing this code, the temporary table `user_measure_count` will hold the results of the query, containing three columns: `id, measure_count, and unique_measures`. The measure_count column will show the total count of measures for each user, and the `unique_measures` column will show the count of distinct measures recorded for each user in the `health.user_logs` table.
+
+**3. What about the `median` number of measurements per user?**
+
+```sql
+SELECT
+  ROUND(AVG(measure_count)) AS rounded_mean
+FROM
+  user_measure_count;
+```
+
+|rounded_mean                            |
+|----------------------------------------|
+|79                                      |
