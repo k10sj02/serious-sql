@@ -33,7 +33,7 @@ With the Health Analytics Mini Case Study, I queried data to bring insights to t
 
 ### 🚀 Solutions with Explanations
 
-**How many `unique users` exist in the logs dataset?**
+**1.** **How many `unique users` exist in the logs dataset?**
 
 ```sql
 SELECT
@@ -61,5 +61,43 @@ Please note, `DISTINCT` is not a function. It is a _modifier_ of the `SELECT` st
 
 When you execute this SQL query, it will return a single number representing the count of unique `id` values in the `user_logs` table of the health database.
 
-**How many total `measurements` do we have `per user on average`?**
+**2.** **How many total `measurements` do we have `per user on average`?**
 
+-- for questions 2-8 we created a temporary table
+
+```sql
+DROP TABLE IF EXISTS user_measure_count;
+
+CREATE TEMP TABLE user_measure_count AS
+SELECT
+  id,
+  COUNT(*) AS measure_count,
+  COUNT(DISTINCT measure) as unique_measures
+FROM
+  health.user_logs
+GROUP BY
+  1;
+
+-- Remember this does not produce a result set. To visualize temp table, run script below
+
+SELECT *
+FROM user_measure_count;
+  ```
+
+This SQL code snippet performs the following tasks:
+
+`DROP TABLE IF EXISTS user_measure_count;`: This line drops the table named `user_measure_count` if it already exists. This is a safety measure to avoid errors in case the table already exists and needs to be recreated.
+
+`CREATE TEMP TABLE user_measure_count AS ...`: This line creates a temporary table called `user_measure_count` to store the results of the following query. A temporary table exists only for the duration of the session and is automatically dropped when the session ends.
+
+`SELECT ...`: This is the main SQL query that retrieves data from the `health.user_logs` table and performs calculations.
+
+`id, COUNT(*) AS measure_count, COUNT(DISTINCT measure) as unique_measures`: The query selects the id column from the health.user_logs table and performs two aggregate functions:
+
+`COUNT(*) AS measure_count`: This counts the total number of rows for each id group, representing the total number of measures for each user.
+COUNT(DISTINCT measure) as unique_measures: This counts the number of distinct (unique) measure values for each id group, representing the unique measures recorded for each user.
+FROM health.user_logs: This specifies the table health.user_logs from which the data should be retrieved.
+
+`GROUP BY 1;`: This groups the results by the first column in the select list, which is id in this case. It means that the count results are calculated for each unique id value, so you get counts specific to each user.
+
+After executing this code, the temporary table `user_measure_count` will hold the results of the query, containing three columns: `id, measure_count, and unique_measures`. The measure_count column will show the total count of measures for each user, and the `unique_measures` column will show the count of distinct measures recorded for each user in the `health.user_logs` table.
