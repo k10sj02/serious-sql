@@ -17,6 +17,12 @@ View the course [here](https://www.datawithdanny.com/courses/serious-sql).
 
 ### 🛠️ Overview
 
+Some of the main areas covered in this case study, including:
+* **Sorting Values**
+* **Inspect Row Counts** 
+* **Duplicates & Record Frequency Review**
+* **Summary Statistics** `(MEAN, MEDIAN)`
+
 With the Health Analytics Mini Case Study, I queried data to bring insights to the following questions:
 
 1. How many `unique users` exist in the logs dataset?
@@ -167,13 +173,13 @@ WHERE measure_count >= 3;
 
 This SQL query calculates the count of rows in the `user_measure_count` temporary table where the value in the `measure_count` column is greater than or equal to 3. Let's break down the query:
 
-1. `SELECT`: This keyword is used to specify the result you want to retrieve from the database.
+`SELECT`: This keyword is used to specify the result you want to retrieve from the database.
 
-2. `COUNT(*)`: This is an aggregate function in SQL that returns the number of rows that match the specified condition. In this case, it counts all the rows.
+`COUNT(*)`: This is an aggregate function in SQL that returns the number of rows that match the specified condition. In this case, it counts all the rows.
 
-3. `FROM user_measure_count`: This specifies the source table `user_measure_count` from which the data should be retrieved.
+`FROM user_measure_count`: This specifies the source table `user_measure_count` from which the data should be retrieved.
 
-4. `WHERE measure_count >= 3`: This is a condition specified after the `WHERE` keyword. It filters the data and only includes rows where the `measure_count` column is greater than or equal to 3.
+`WHERE measure_count >= 3`: This is a condition specified after the `WHERE` keyword. It filters the data and only includes rows where the `measure_count` column is greater than or equal to 3.
 
 When you execute this SQL query, it will return a single value, which represents the count of rows in the `user_measure_count` temporary table that have a value of `measure_count` greater than or equal to 3. The query is useful for finding the number of users in the `user_measure_count` table who have at least 3 measures recorded in the `health.user_logs` table.
 
@@ -192,13 +198,13 @@ WHERE measure_count >= 1000;
 
 This SQL query calculates the count of rows in the `user_measure_count` temporary table where the value in the `measure_count` column is greater than or equal to 1000. Let's break down the query:
 
-1. `SELECT`: This keyword is used to specify the result you want to retrieve from the database.
+`SELECT`: This keyword is used to specify the result you want to retrieve from the database.
 
-2. `COUNT(*)`: This is an aggregate function in SQL that returns the number of rows that match the specified condition. In this case, it counts all the rows.
+`COUNT(*)`: This is an aggregate function in SQL that returns the number of rows that match the specified condition. In this case, it counts all the rows.
 
-3. `FROM user_measure_count`: This specifies the source table `user_measure_count` from which the data should be retrieved.
+`FROM user_measure_count`: This specifies the source table `user_measure_count` from which the data should be retrieved.
 
-4. `WHERE measure_count >= 1000`: This is a condition specified after the `WHERE` keyword. It filters the data and only includes rows where the `measure_count` column is greater than or equal to 1000.
+`WHERE measure_count >= 1000`: This is a condition specified after the `WHERE` keyword. It filters the data and only includes rows where the `measure_count` column is greater than or equal to 1000.
 
 When you execute this SQL query, it will return a single value, which represents the count of rows in the `user_measure_count` temporary table that have a value of `measure_count` greater than or equal to 1000. The query is useful for finding the number of users in the `user_measure_count` table who have at least 1000 measures recorded in the `health.user_logs` table.
 
@@ -214,6 +220,18 @@ WHERE measure = 'blood_glucose';
 |----------------------------------------|
 |325                                     |
 
+This SQL query calculates the count of distinct `id` values from the `health.user_logs` table where the value in the `measure` column is equal to `'blood_glucose'`. Let's break down the query:
+
+`SELECT`: This keyword is used to specify the result you want to retrieve from the database.
+
+`COUNT(DISTINCT id)`: This is an aggregate function in SQL that returns the number of distinct (unique) values of the `id` column. In this case, it calculates the count of unique `id` values that match the specified condition.
+
+`FROM health.user_logs`: This specifies the source table `health.user_logs` from which the data should be retrieved.
+
+`WHERE measure = 'blood_glucose'`: This is a condition specified after the `WHERE` keyword. It filters the data and only includes rows where the value in the `measure` column is equal to `'blood_glucose'`.
+
+When you execute this SQL query, it will return a single value, which represents the count of distinct `id` values from the `health.user_logs` table where the `measure` column is `'blood_glucose'`. This query can be helpful in determining the number of unique users who have recorded the `'blood_glucose'` measure in the `health.user_logs` table.
+
 **7. How many users have `at least 2 types` of measurements?**
 
 ```sql
@@ -227,6 +245,17 @@ WHERE unique_measures >= 2;
 |----------------------------------------|
 |204                                     |
 
+This SQL query calculates the count of rows in the `user_measure_count` temporary table where the value in the `unique_measures` column is greater than or equal to 2. Let's break down the query:
+
+`SELECT`: This keyword is used to specify the result you want to retrieve from the database.
+
+`COUNT(*)`: This is an aggregate function in SQL that returns the number of rows that match the specified condition. In this case, it counts all the rows.
+
+`FROM user_measure_count`: This specifies the source table `user_measure_count` from which the data should be retrieved.
+
+`WHERE unique_measures >= 2`: This is a condition specified after the `WHERE` keyword. It filters the data and only includes rows where the value in the `unique_measures` column is greater than or equal to 2.
+
+When you execute this SQL query, it will return a single value, which represents the count of rows in the `user_measure_count` temporary table that have a value of `unique_measures` greater than or equal to 2. The query is useful for finding the number of users in the `user_measure_count` table who have recorded at least 2 unique measures in the `health.user_logs` table.
 
 **8. How many users have all 3 measures - `blood glucose`, `weight` and `blood pressure`?**
 
@@ -239,6 +268,18 @@ WHERE unique_measures = 3;
 |count                                   |
 |----------------------------------------|
 |50                                      |
+
+This SQL query calculates the count of rows in the `user_measure_count` temporary table where the value in the `unique_measures` column is equal to 3. Let's break down the query:
+
+`SELECT`: This keyword is used to specify the result you want to retrieve from the database.
+
+`COUNT(*)`: This is an aggregate function in SQL that returns the number of rows that match the specified condition. In this case, it counts all the rows.
+
+`FROM user_measure_count`: This specifies the source table `user_measure_count` from which the data should be retrieved.
+
+`WHERE unique_measures = 3`: This is a condition specified after the `WHERE` keyword. It filters the data and only includes rows where the value in the `unique_measures` column is equal to 3.
+
+When you execute this SQL query, it will return a single value, which represents the count of rows in the `user_measure_count` temporary table that have a value of `unique_measures` equal to 3. The query is useful for finding the number of users in the `user_measure_count` table who have recorded exactly 3 unique measures in the `health.user_logs` table.
 
 **9. What is the `median systolic/diastolic` `blood pressure` values?**
 
@@ -254,11 +295,17 @@ WHERE measure = 'blood_pressure';
 |126            |79              |
 ---
 
-## 💻 Key Highlight
-> **Initial thoughts:** 
+This SQL query calculates the median values of the `systolic` and `diastolic` columns from the `health.user_logs` table where the value in the `measure` column is equal to `'blood_pressure'`. Let's break down the query:
 
-Some of the main areas covered in this case study, including:
-* **Sorting Values**
-* **Inspect Row Counts** 
-* **Duplicates & Record Frequency Review**
-* **Summary Statistics** `(MEAN, MEDIAN)`
+`SELECT`: This keyword is used to specify the columns or expressions that you want to retrieve from the database.
+
+`PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY systolic) AS median_systolic`: This part of the query uses the `PERCENTILE_CONT` window function to calculate the median value of the `systolic` column in the `health.user_logs` table where the measure is `'blood_pressure'`. The `0.5` argument for `PERCENTILE_CONT` represents the median (50th percentile). The `WITHIN GROUP (ORDER BY systolic)` clause ensures that the function calculates the median over the sorted values of the `systolic` column.
+
+`PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY diastolic) AS median_diastolic`: This part of the query uses the `PERCENTILE_CONT` window function to calculate the median value of the `diastolic` column in the `health.user_logs` table where the measure is `'blood_pressure'`. The `0.5` argument for `PERCENTILE_CONT` represents the median (50th percentile). The `WITHIN GROUP (ORDER BY diastolic)` clause ensures that the function calculates the median over the sorted values of the `diastolic` column.
+
+`FROM health.user_logs`: This specifies the source table `health.user_logs` from which the data should be retrieved.
+
+`WHERE measure = 'blood_pressure'`: This is a condition specified after the `WHERE` keyword. It filters the data and only includes rows where the value in the `measure` column is equal to `'blood_pressure'`.
+
+When you execute this SQL query, it will return a single row with two columns: `median_systolic` and `median_diastolic`. These columns will contain the median values of the `systolic` and `diastolic` columns, respectively, from the `health.user_logs` table where the measure is `'blood_pressure'`. The medians represent the middle values of the sorted `systolic` and `diastolic` values for the corresponding blood pressure measurements.
+
