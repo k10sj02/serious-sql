@@ -28,3 +28,13 @@ With the Health Analytics Mini Case Study, I queried data to bring insights to t
 7. Have `at least 2 types` of measurements?
 8. Have all 3 measures - `blood glucose`, `weight` and `blood pressure`?
 9. What is the `median systolic/diastolic` `blood pressure` values?
+
+-----------------------------------------
+
+### 🚀 Solutions
+
+```sql
+SELECT
+  COUNT(DISTINCT id) AS unique_users
+FROM health.user_logs;
+```
