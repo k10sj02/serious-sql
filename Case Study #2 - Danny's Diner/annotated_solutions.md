@@ -42,6 +42,33 @@ GROUP BY row_counts
 ORDER BY row_counts;
 ```
 
+```sql
+SELECT customer_id, COUNT(*)
+FROM dannys_diner.sales
+GROUP BY customer_id;
+```
+
+-- This shows us that there are 1 specific customer ordered 3 times while the other 2 customers ordered 6 times respectively.
+-- As a result, we can indeed confirm that there are multiple rows per customer_id value in our dannys_diner.sales table.
+-- The main query shows that we have 2 customer ids with 6 records each and 1 customer id with 3 records. This confirms the 
+
+-- first generate group by counts on the target_column_values column
+```sql
+WITH counts_base AS (
+SELECT 
+  product_id AS target_column_values,
+  COUNT(*) AS row_counts
+FROM dannys_diner.sales
+  GROUP BY product_id
+  )
+SELECT 
+   row_counts,
+   COUNT(target_column_values) AS count_of_target_values
+FROM counts_base
+GROUP BY row_counts;
+```
+
+-- The main query shows that we have 2 customer ids with 6 records each and 1 customer id with 3 records. This confirms the hypothesis.
 
 ## Case Study Questions
 
