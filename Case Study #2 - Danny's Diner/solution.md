@@ -6,6 +6,11 @@ FROM dannys_diner.members;
 ```
 _Insight: We have 2 customers in the members table._
 
+```sql
+SELECT COUNT (DISTINCT customer_id)
+FROM dannys_diner.sales;
+```
+
 ## Case Study Questions
 
 ### 1. What is the total amount each customer spent at the restaurant?
