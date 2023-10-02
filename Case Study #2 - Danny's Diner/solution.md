@@ -4,7 +4,7 @@
 SELECT COUNT (DISTINCT customer_id)
 FROM dannys_diner.members;
 ```
-Insight: We have 2 customers in the members table. 
+_Insight: We have 2 customers in the members table. _
 
 ## Case Study Questions
 
