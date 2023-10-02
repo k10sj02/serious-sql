@@ -12,6 +12,17 @@ FROM dannys_diner.sales;
 ```
 _Insight: We have 3 customers in the sales table._ 
 
+```sql
+SELECT *
+FROM dannys_diner.menu;
+```
+
+**Understanding Foreign Key Distribution**
+
+- Hypothesis 1: number of customers in members table should be equal to number of customers in sales table
+- Hypothesis 2: each customer will have multiple orders in the sales table i.e. a 1-n relationship
+- Hypothesis 3: There will be a multiple records per unique customer_id in the dvd_rentals.rental table
+
 ## Case Study Questions
 
 ### 1. What is the total amount each customer spent at the restaurant?
