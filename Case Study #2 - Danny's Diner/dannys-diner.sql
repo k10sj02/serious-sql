@@ -1,5 +1,9 @@
 Danny’s Diner 
 
+Author: Stann-Omar Jones
+Date: Oct 1, 2023
+Tool Used: Docker/PostgreSQL
+
 -- What is the total amount each customer spent at the restaurant?
 
 -- this should show the number of customers we have in our database 
