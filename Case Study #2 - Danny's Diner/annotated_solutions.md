@@ -23,6 +23,26 @@ FROM dannys_diner.menu;
 - Hypothesis 2: each customer will have multiple orders in the sales table i.e. a 1-n relationship
 - Hypothesis 3: There will be a multiple records per unique customer_id in the dvd_rentals.rental table
 
+-- first generate group by counts on the target_column_values column
+
+```sql
+WITH counts_base AS (
+SELECT
+  customer_id AS target_column_values, 
+  COUNT(*) AS row_counts
+FROM dannys_diner.sales
+GROUP BY target_column_values
+)
+-- summarize the group by counts above by grouping again on the row_counts from counts_base CTE part
+SELECT
+  row_counts, -- represents the count of occurrences of each customer_id
+  COUNT(target_column_values) as count_of_target_values -- unique customer_id values for each row_counts
+FROM counts_base
+GROUP BY row_counts
+ORDER BY row_counts;
+```
+
+
 ## Case Study Questions
 
 ### 1. What is the total amount each customer spent at the restaurant?
