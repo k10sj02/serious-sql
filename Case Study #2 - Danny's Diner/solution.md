@@ -1,3 +1,9 @@
+## Exploratory Data Analysis 
+
+```sql
+SELECT COUNT (DISTINCT customer_id)
+FROM dannys_diner.members;
+```
 
 ## Case Study Questions
 
