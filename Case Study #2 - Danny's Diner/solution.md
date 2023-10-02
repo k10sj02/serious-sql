@@ -10,6 +10,7 @@ _Insight: We have 2 customers in the members table._
 SELECT COUNT (DISTINCT customer_id)
 FROM dannys_diner.sales;
 ```
+_Insight: We have 3 customers in the sales table._ 
 
 ## Case Study Questions
 
