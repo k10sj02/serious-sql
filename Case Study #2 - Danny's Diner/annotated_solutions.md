@@ -24,6 +24,12 @@ _Insight: We have 3 customers in the sales table but we have 2 customers in the 
 SELECT *
 FROM dannys_diner.menu;
 ```
+| product_id | product_name | price |
+|------------|--------------|-------|
+| 1          | sushi        | 10    |
+| 2          | curry        | 15    |
+| 3          | ramen        | 12    |
+
 _Insight: We have 3 different meals in the menu table._
 
 - Hypothesis 2: each customer will have multiple orders in the sales table i.e. a 1-n relationship
