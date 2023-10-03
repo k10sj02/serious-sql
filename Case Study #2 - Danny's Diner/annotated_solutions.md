@@ -16,6 +16,7 @@ _Insight: We have 3 customers in the sales table._
 SELECT *
 FROM dannys_diner.menu;
 ```
+_Insight: We have 3 different meals in the menu table._
 
 **Understanding Foreign Key Distribution**
 
