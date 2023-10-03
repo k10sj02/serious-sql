@@ -18,7 +18,7 @@ FROM dannys_diner.sales;
 |------|
 |3     | 
 
-_Insight: We have 3 customers in the sales table but we have 2 customers in the members table. Upon further inquiry, I realize that my hypothesis is wrong. `sales` represent all the customers who have purchased meals while before converting to `members`._
+_Insight: We have 3 customers in the sales table but we have 2 customers in the members table. Upon further inquiry, I realize that my hypothesis is wrong. `sales` represent all the customers who have purchased meals while before converting to `members`. It is important to pay attention to simple nominal distinctions like these as they can be very important in the exploratory process._
 
 ```sql
 SELECT *
