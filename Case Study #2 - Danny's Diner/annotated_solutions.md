@@ -82,13 +82,13 @@ _- As a result, we can indeed confirm that there are multiple rows per product_i
 
 **So why is this type of EDA important?**
 
-1. Understanding Data Structure: EDA helps you gain a deep understanding of the SQL schema, including the tables, their relationships, and the data types of each column. This understanding is crucial for effectively querying and manipulating the data.
+1. _Understanding Data Structure_: EDA helps you gain a deep understanding of the SQL schema, including the tables, their relationships, and the data types of each column. This understanding is crucial for effectively querying and manipulating the data.
 
-2. Detecting Data Quality Issues: EDA allows you to identify data quality issues such as missing values, duplicates, outliers, and inconsistencies in the data. Identifying and addressing these issues early on can prevent errors in downstream analyses.
+2. _Detecting Data Quality Issues_: EDA allows you to identify data quality issues such as missing values, duplicates, outliers, and inconsistencies in the data. Identifying and addressing these issues early on can prevent errors in downstream analyses.
 
-3. Assessing Data Distribution: EDA allows you to examine the distribution of data in each column, which is essential for selecting appropriate statistical methods and visualization techniques.
+3. _Assessing Data Distribution_: EDA allows you to examine the distribution of data in each column, which is essential for selecting appropriate statistical methods and visualization techniques.
 
-4. Hypothesis Generation: EDA can lead to the generation of hypotheses or research questions that can guide further analyses and investigations. It helps in formulating meaningful questions to explore in depth.
+4. _Hypothesis Generation_: EDA can lead to the generation of hypotheses or research questions that can guide further analyses and investigations. It helps in formulating meaningful questions to explore in depth.
 
 ## Case Study Questions
 
