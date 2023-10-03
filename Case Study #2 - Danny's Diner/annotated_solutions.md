@@ -95,18 +95,20 @@ _- As a result, we can indeed confirm that there are multiple rows per product_i
 ### 1. What is the total amount each customer spent at the restaurant?
 
 ````sql
-SELECT s.customer_id, m.price,  SUM (m.price)
-FROM menu m JOIN sales s 
-ON m.product_id = s.product_id 
-GROUP BY customer_id
-ORDER BY s.customer_id 
+SELECT t1.customer_id cust_id, 
+       SUM(t2.price) total_spend
+FROM dannys_diner.sales t1
+JOIN dannys_diner.menu t2
+ON t1.product_id=t2.product_id
+GROUP BY t1.customer_id
+ORDER BY t1.customer_id;
 ````
 
-|customer_id |price| SUM (m.price)|
-|----------- | ---- | ----------- |
-|A           |  10|         76|
-|B           |  10|         74|
-|C           |  12|         36|
+|customer_id |total_spend|
+|----------- | ----------|
+|A           |         76|
+|B           |         74|
+|C           |         36|
 
 #### Answer: 
 Customer A: $76
