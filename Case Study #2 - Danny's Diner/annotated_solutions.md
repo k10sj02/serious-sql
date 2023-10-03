@@ -1,4 +1,4 @@
-## Exploratory Data Analysis (EDA
+## Exploratory Data Analysis (EDA)
 
 - Hypothesis 1: number of customers in members table should be equal to number of customers in sales table
 
