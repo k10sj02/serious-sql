@@ -6,11 +6,18 @@
 SELECT COUNT (DISTINCT customer_id)
 FROM dannys_diner.members;
 ```
+|count |
+|------|
+|2     | 
 
 ```sql
 SELECT COUNT (DISTINCT customer_id)
 FROM dannys_diner.sales;
 ```
+|count |
+|------|
+|3     | 
+
 _Insight: We have 3 customers in the sales table but we have 2 customers in the members table. Upon further inquiry, I realize that my hypothesis is wrong. `sales` represent all the customers who have purchased meals while before converting to `members`._
 
 ```sql
