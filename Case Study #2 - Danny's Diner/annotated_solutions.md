@@ -95,13 +95,16 @@ _- As a result, we can indeed confirm that there are multiple rows per product_i
 ### 1. What is the total amount each customer spent at the restaurant?
 
 ````sql
-SELECT t1.customer_id cust_id, 
-       SUM(t2.price) total_spend
-FROM dannys_diner.sales t1
-JOIN dannys_diner.menu t2
-ON t1.product_id=t2.product_id
-GROUP BY t1.customer_id
-ORDER BY t1.customer_id;
+SELECT
+  t1.customer_id cust_id,
+  SUM(t2.price) total_spend
+FROM
+  dannys_diner.sales t1
+  JOIN dannys_diner.menu t2 ON t1.product_id = t2.product_id
+GROUP BY
+  t1.customer_id
+ORDER BY
+  t1.customer_id;
 ````
 
 |customer_id |total_spend|
@@ -123,17 +126,20 @@ ________________________________________________________________________________
 ### 2. How many days has each customer visited the restaurant?
 
 ````sql
-SELECT customer_id,  COUNT (DISTINCT order_date)
-FROM sales 
-GROUP BY customer_id
+SELECT
+  t1.customer_id,
+  COUNT(DISTINCT t1.order_date)
+FROM
+  dannys_diner.sales t1
+GROUP BY
+  t1.customer_id;
 ````
 
-
-customer_id|COUNT (DISTINCT order_date)|
------------|---------------------------|
-A          |                          4|
-B          |                          6|
-C          |                          2|
+customer_id|count                         |
+-----------|------------------------------|
+A          |                             4|
+B          |                             6|
+C          |                             2|
 
 #### Comment: 
 It is important here to use **COUNT(DISTINCT ...)** to find the number of days each customer visited the restaurant. If we don't use **DISTINCT** we might end up with a larger number as customers could visit the restaurant more than once. 
