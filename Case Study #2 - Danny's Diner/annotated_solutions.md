@@ -107,7 +107,7 @@ ORDER BY
   t1.customer_id;
 ````
 
-|customer_id |total_spend|
+|cust_id     |total_spend|
 |----------- | ----------|
 |A           |         76|
 |B           |         74|
