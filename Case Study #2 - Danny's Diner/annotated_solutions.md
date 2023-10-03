@@ -58,7 +58,7 @@ ORDER BY row_counts;
 | 6          | 2                      |
 
 _- Insights:
-- This shows us that 1 specific customer (shown by `target_value`) ordered 3 times (shown by `row_counts`) while the other 2 customers ordered 6 times respectively.
+- This shows us that 1 specific customer (shown by `target_values`) ordered 3 times (shown by `row_counts`) while the other 2 customers ordered 6 times respectively.
 - As a result, we can indeed confirm that there are multiple rows per customer_id value in our dannys_diner.sales table, confirming a 1-n relationship._
 
 
