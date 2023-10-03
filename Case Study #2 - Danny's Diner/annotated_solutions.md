@@ -80,7 +80,7 @@ _- Insights:_
 _- This shows us that 1 product_id (shown by `target_values`) ordered 3 times (shown by `row_counts`) while the others were ordered 4 and 8 times respectively._
 _- As a result, we can indeed confirm that there are multiple rows per product_id value in our dannys_diner.sales table, i.e. a 1-n relationship._
 
-##So why is this type of EDA important?
+**So why is this type of EDA important?**
 
 1. Understanding Data Structure: EDA helps you gain a deep understanding of the SQL schema, including the tables, their relationships, and the data types of each column. This understanding is crucial for effectively querying and manipulating the data.
 
