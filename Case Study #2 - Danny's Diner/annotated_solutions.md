@@ -61,9 +61,8 @@ _- Insights:_
 _- This shows us that 1 specific customer (shown by `target_values`) ordered 3 times (shown by `row_counts`) while the other 2 customers ordered 6 times respectively._
 _- As a result, we can indeed confirm that there are multiple rows per customer_id value in our dannys_diner.sales table, i.e. a 1-n relationship._
 
-
--- first generate group by counts on the target_column_values column
 ```sql
+-- first generate group by counts on the target_column_values column
 WITH counts_base AS (
 SELECT 
   product_id AS target_column_values,
@@ -72,13 +71,12 @@ FROM dannys_diner.sales
   GROUP BY product_id
   )
 SELECT 
-   row_counts,
-   COUNT(target_column_values) AS count_of_target_values
+   row_counts, -- represents the count of occurrences of each product_id
+   COUNT(target_column_values) AS count_of_target_values -- unique product_id values for each row_counts
 FROM counts_base
 GROUP BY row_counts;
 ```
 
--- The main query shows that we have 2 customer ids with 6 records each and 1 customer id with 3 records. This confirms the hypothesis.
 
 ## Case Study Questions
 
