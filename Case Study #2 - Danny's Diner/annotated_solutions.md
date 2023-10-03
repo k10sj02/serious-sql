@@ -35,10 +35,8 @@ _Insight: We have 3 different meals in the menu table._
 - Hypothesis 2: each customer will have multiple orders in the sales table i.e. a 1-n relationship
 - Hypothesis 3: There will be a multiple records per unique customer_id in the dvd_rentals.rental table
 
-  
+```sql  
 -- first generate group by counts on the target_column_values column
-
-```sql
 WITH counts_base AS (
 SELECT
   customer_id AS target_column_values, 
@@ -61,9 +59,10 @@ FROM dannys_diner.sales
 GROUP BY customer_id;
 ```
 
--- This shows us that there are 1 specific customer ordered 3 times while the other 2 customers ordered 6 times respectively.
--- As a result, we can indeed confirm that there are multiple rows per customer_id value in our dannys_diner.sales table.
--- The main query shows that we have 2 customer ids with 6 records each and 1 customer id with 3 records. This confirms the 
+Insights:
+-- This shows us that 1 specific customer (shown by `target_value`) ordered 3 times (shown by `row_counts) while the other 2 customers ordered 6 times respectively.
+-- As a result, we can indeed confirm that there are multiple rows per customer_id value in our dannys_diner.sales table, confirming a 1-n relationship.
+
 
 -- first generate group by counts on the target_column_values column
 ```sql
