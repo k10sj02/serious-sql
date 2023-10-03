@@ -52,12 +52,10 @@ FROM counts_base
 GROUP BY row_counts
 ORDER BY row_counts;
 ```
-
-```sql
-SELECT customer_id, COUNT(*)
-FROM dannys_diner.sales
-GROUP BY customer_id;
-```
+| row_counts | count_of_target_values |
+|------------|------------------------|
+| 3          | 1                      |
+| 6          | 2                      |
 
 Insights:
 -- This shows us that 1 specific customer (shown by `target_value`) ordered 3 times (shown by `row_counts) while the other 2 customers ordered 6 times respectively.
