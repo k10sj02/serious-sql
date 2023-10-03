@@ -1,16 +1,17 @@
 ## Exploratory Data Analysis 
 
+- Hypothesis 1: number of customers in members table should be equal to number of customers in sales table
+
 ```sql
 SELECT COUNT (DISTINCT customer_id)
 FROM dannys_diner.members;
 ```
-_Insight: We have 2 customers in the members table._
 
 ```sql
 SELECT COUNT (DISTINCT customer_id)
 FROM dannys_diner.sales;
 ```
-_Insight: We have 3 customers in the sales table._ 
+_Insight: We have 3 customers in the sales table but we have 2 customers in the members table. Upon further inquiry, I realize that my hypothesis is wrong. `sales` represent all the customers who have purchased meals while before converting to `members`._
 
 ```sql
 SELECT *
@@ -18,12 +19,10 @@ FROM dannys_diner.menu;
 ```
 _Insight: We have 3 different meals in the menu table._
 
-**Understanding Foreign Key Distribution**
-
-- Hypothesis 1: number of customers in members table should be equal to number of customers in sales table
 - Hypothesis 2: each customer will have multiple orders in the sales table i.e. a 1-n relationship
 - Hypothesis 3: There will be a multiple records per unique customer_id in the dvd_rentals.rental table
 
+  
 -- first generate group by counts on the target_column_values column
 
 ```sql
