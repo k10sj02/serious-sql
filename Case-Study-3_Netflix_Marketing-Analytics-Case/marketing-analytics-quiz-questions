@@ -1,0 +1,226 @@
+-------------------------------
+   ---- QUIZ QUESTIONS ----
+-------------------------------
+
+--- 1. Which film title was the most recommended for all customers?
+
+```sql
+WITH all_recommendations AS (
+  SELECT
+    title
+  FROM category_recommendations
+  
+  UNION ALL
+  
+  SELECT
+    title
+  FROM actor_recommendations
+)
+SELECT
+  title,
+  COUNT(*) AS recommendations
+FROM all_recommendations
+GROUP BY 1
+ORDER BY 2 DESC;
+```
+
+--- 2. How many customers were included in the email campaign?
+
+SELECT COUNT(*)
+FROM final_data_asset;
+
+--- 3. Out of all the possible films - what percentage coverage do we have in our recommendations? 
+--- (total unique films recommended divided by total available films)
+
+```sql
+WITH all_recommendations AS (
+  SELECT
+    title
+  FROM category_recommendations
+  UNION
+  SELECT
+    title
+  FROM actor_recommendations
+),
+recommendations AS (
+  SELECT COUNT(DISTINCT title) AS _count FROM all_recommendations
+),
+all_films AS (
+  SELECT COUNT(DISTINCT title) AS _count FROM dvd_rentals.film
+)
+SELECT
+  all_films._count AS all,
+  recommendations._count AS recommended,
+  ROUND(
+  100 * recommendations._count::NUMERIC /
+    all_films._count::NUMERIC
+) AS coverage_percentage
+FROM recommendations
+CROSS JOIN all_films;
+```
+
+--- 4. What is the most popular top category?
+
+```sql
+SELECT
+  category_name,
+  COUNT(*) AS category_count
+FROM first_category_insights
+GROUP BY 1
+ORDER BY 2 DESC;
+```
+
+--- 5. What is the 4th most popular top category?
+
+```sql
+WITH ranked_cte AS (
+  SELECT
+    category_name,
+    COUNT(*) AS category_count,
+    ROW_NUMBER() OVER (ORDER BY COUNT(*) DESC) AS category_rank
+  FROM first_category_insights
+  GROUP BY 1
+)
+SELECT * FROM ranked_cte WHERE category_rank = 4;
+```
+
+--- 6. What is the average percentile ranking for each customer in their top category 
+--- rounded to the nearest 2 decimal places? Hint: be careful of your data types!
+
+```sql
+SELECT
+  ROUND(AVG(percentile::NUMERIC), 2)
+FROM first_category_insights;
+```
+
+--- 7. What is the cumulative distribution of the top 5 percentile values 
+--- for the top category from the first_category_insights table rounded to 
+--- the nearest round percentage?
+
+```sql
+
+SELECT
+  ROUND(percentile) AS percentile,
+  COUNT(*),
+  ROUND(100 * CUME_DIST() OVER (ORDER BY ROUND(percentile))) AS cumulative_distribution
+FROM first_category_insights
+GROUP BY 1
+ORDER BY 1;
+
+```
+
+--- 8. What is the median of the second category percentage of entire viewing history?
+
+```sql
+
+SELECT
+PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY total_percentage)
+FROM second_category_insights;
+
+```
+
+--- 9. What is the 80th percentile of films watched featuring each customer's favourite actor?
+
+```sql
+
+SELECT
+  PERCENTILE_CONT(0.8) WITHIN GROUP (ORDER BY rental_count) AS p80_rental_count
+FROM top_actor_counts;
+
+```
+
+--- 10. What was the average number of films watched by each 
+--- customer rounded to the nearest whole number?
+
+```sql
+
+SELECT
+  ROUND(AVG(total_count)) AS avg_count
+FROM total_counts
+
+```
+
+--- 11. What is the top combination of top 2 categories 
+--- and how many customers if the order is relevant (e.g. 
+--- Horror and Drama is a different combination to Drama and Horror)
+
+```sql
+
+SELECT
+  cat_1,
+  cat_2,
+  COUNT(*) AS customer_count
+FROM final_data_asset
+GROUP BY
+  cat_1,
+  cat_2
+ORDER BY 3 DESC
+LIMIT 5;
+
+```
+
+--- 12. Which actor was the most popular for all customers?
+
+```sql
+
+SELECT
+  actor,
+  COUNT(*) AS customer_count
+FROM final_data_asset
+GROUP BY 1
+ORDER BY 2 DESC;
+
+```
+
+--- 13. How many films on average had customers already seen that 
+--- feature their favourite actor rounded to closest integer?
+
+```sql
+
+SELECT
+  ROUND(AVG(rental_count))
+FROM top_actor_counts;
+
+```
+
+--- 14. CHALLENGE: What is the most common top categories combination 
+--- if order was irrelevant and how many customers have this combination? 
+--- (e.g. Horror and Drama is a the same as Drama and Horror)
+
+-------------------------------
+   ---- METHOD 1 ----
+-------------------------------
+SELECT
+  cat_1,
+  cat_2,
+  COUNT(*) AS customer_count
+FROM (
+  SELECT
+    LEAST(cat_1, cat_2) AS cat_1,
+    GREATEST(cat_1, cat_2) AS cat_2,
+    customer_id
+  FROM
+    final_data_asset
+) AS combined_categories
+GROUP BY
+  cat_1,
+  cat_2
+ORDER BY
+  customer_count DESC
+
+-------------------------------
+   ---- METHOD 2 ----
+-------------------------------
+
+SELECT
+  CASE WHEN category_1 < category_2 THEN category_1 ELSE category_2 END AS cat_1,
+  CASE WHEN category_1 < category_2 THEN category_2 ELSE category_1 END AS cat_2,
+  COUNT(*) AS customer_count
+FROM
+  final_data_asset
+GROUP BY
+  cat_1,
+  cat_2
+ORDER BY
+  customer_count DESC
+LIMIT 1;
