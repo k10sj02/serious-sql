@@ -1,3 +1,5 @@
+-- This file contains example queries in MySQL dialect.
+
 -- UPDATE statement to convert existing date values to DATETIME format
 UPDATE coviddeaths
 -- SET the 'date' column to the result of the STR_TO_DATE() function, which converts the existing date values to the specified format
