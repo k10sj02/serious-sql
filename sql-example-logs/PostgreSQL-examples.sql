@@ -1,8 +1,8 @@
 > Has anyone ever made a cohort analysis pivot table on a quarterly rather than monthly basis?
-I'm working on that in SQL (MySQL 5.7.12) and I can get each of the quarters (Q2 '23, Q3 '23, etc.) 
-in the column label, but I'm actually wondering now if each of the instances across the row headers should represent billing months or billing quarters
-The only reason I'm making this quarterly cohort analysis anyway is because a client asked for it 
-in addition to the regular monthly cohort analysis?
+> I'm working on that in SQL (MySQL 5.7.12) and I can get each of the quarters (Q2 '23, Q3 '23, etc.) 
+> in the column label, but I'm actually wondering now if each of the instances across the row headers should represent billing months or billing quarters
+> The only reason I'm making this quarterly cohort analysis anyway is because a client asked for it 
+> in addition to the regular monthly cohort analysis?
 
 SELECT
     -- This column calculates the quarter in which the delivery occurred, formatted as 'Q[Quarter]-YYYY'
