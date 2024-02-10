@@ -1,2 +1,0 @@
-UPDATE coviddeaths
-SET date = STR_TO_DATE(date, '%m/%d/%y');
