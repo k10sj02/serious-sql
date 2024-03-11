@@ -1,0 +1,51 @@
+--- 2. Show three products with the highest volumne of sales: by quantity, by revenue
+
+SELECT 
+	product.product_id,
+	product_name,
+	SUM(order.quantity) AS value,
+	'quantity' AS meaning
+FROM product
+JOIN order ON product.product_id=order.product_id
+GROUP BY product.product_id, product_name
+ORDER BY order.quantity DESC
+LIMIT 3
+
+UNION
+
+SELECT 
+	product.product_id,
+	product_name,
+	product_price * order.quantity AS value,
+	'revenue' AS meaning
+FROM product
+JOIN order ON product.product_id=order.product_id
+GROUP BY product.product_id, product_name
+ORDER BY revenue DESC
+LIMIT 3
+
+--- 3. Show the above for the moving window of the past three days
+
+SELECT product.product_id
+		product_name, 
+		SUM(order.quantity) AS qty
+FROM product 
+JOIN order ON product.product_id=order.product_id
+WHERE transaction_time >= NOW() - INTERVAL '5 DAY'
+		AND transaction_time <= NOW() - INTERVAL '2 DAY'
+GROUP BY product.product_id, product_name
+ORDER BY order.quantity DESC
+LIMIT 3
+
+3. Show the above for the moving window of the past three days - METHOD 2
+
+SELECT product.product_id
+		product_name, 
+		SUM(order.quantity) AS qty
+FROM product 
+JOIN order ON product.product_id=order.product_id
+WHERE transaction_time BETWEEN NOW() - INTERVAL '5 DAY' 
+		AND NOW() - INTERVAL '2 DAY'
+GROUP BY product.product_id, product_name
+ORDER BY order.quantity DESC
+LIMIT 3
