@@ -1,0 +1,117 @@
+/* B2B. Getting daily or monthly retention for free users 
+
+Input tables: 
+signups - user_id, s.signup_date
+activity - user_id, activity_date
+*/  
+
+
+-- CREATE VIEW cohort_user_retention AS
+
+WITH new_user_activity AS (
+  SELECT a.*
+  FROM activity a
+  JOIN signups s 
+  ON s.user_id = a.user_id
+    AND s.signup_date = a.activity_date -- if initial user signup counts as activity. If not, either disregard or s.signup_date = a.activity_date
+)
+, active_user_count AS (
+  SELECT activity_date
+    , COUNT(DISTINCT user_id) AS users_count
+  FROM new_user_activity
+  GROUP BY activity_date
+)
+
+-- for daily retention: 
+SELECT n.signup_date AS signup_date,
+  DATEDIFF('DAU', n.signup_date, a.activity_date) AS period,
+  MAX(c.users_count) AS new_users,
+  COUNT(DISTINCT a.user_id) AS retained_users,
+  COUNT(DISTINCT a.user_id) / MAX(c.users_count)::float AS retention
+FROM new_user_activity n
+LEFT JOIN activity a 
+  ON n.user_id = a.user_id
+  AND n.signup_date < a.activity_date
+  AND (n.signup_date + interval '30 days') >= a.activity_date -- retention data for the next 30 days after signup
+  -- AND (n.signup_date + interval '30 days') = a.activity_date - use for X-day retention
+LEFT JOIN active_user_count c 
+  ON n.signup_date = c.activity_date
+GROUP BY 1, 2
+
+-- for monthly retention:
+SELECT n.signup_date AS signup_date,
+  DATEDIFF('MONTH', n.signup_date, a.activity_date) AS period,
+  MAX(c.users_count) AS new_users,
+  COUNT(DISTINCT a.user_id) AS retained_users,
+  COUNT(DISTINCT a.user_id) / MAX(c.users_count)::float AS retention
+FROM new_user_activity n
+LEFT JOIN activity AS a 
+  ON n.user_id = a.user_id
+  AND n.signup_date < a.activity_date
+  AND (n.signup_date + interval '12 months') >= a.activity_date -- retention data for the next 12 month after signup
+LEFT JOIN active_user_count AS c 
+  ON n.signup_date = c.activity_date
+GROUP BY 1, 2
+
+----------------------------------------------------------------
+
+/* SaaS Getting monthly or annual retention for paid subscriptions in 2 steps:
+Step 1 - create active subscriptions_cohort view 
+Step 2 - get retention based on active subscriptions   
+
+Input table: 
+subscriptions
+snapshot_date
+user_id - paid subscriber
+first_sub_date - first initial subscription payment date
+sub_renewal_date - payment renewal date
+sub_end_date - expected subscription end day / payment due date
+
+Step 1. Create subscriptions cohort to be used for retention: */
+
+-- CREATE VIEW subscriptions_cohort AS
+
+SELECT snapshot_date,
+       cohort_year,
+       cohort_month,
+       COUNT(DISTINCT user_id) AS n_subs 
+
+FROM (
+  SELECT snapshot_date,
+     SUBSTRING(first_sub_date, 1, 4) AS cohort_year, -- use TO_CHAR() instead of SUBSTRING() for MySQL or other versions
+     SUBSTRING(DATE_TRUNC('MONTH', first_sub_date), 1, 10) AS cohort_month,
+     s.user_id,
+     s.sub_renewal_date,
+     s.sub_end_date
+      FROM (SELECT a.* 
+            FROM subscriptions a
+            LEFT JOIN
+		(SELECT user_id, first_sub_date 
+                FROM subscriptions 
+                WHERE first_sub_date = sub_renewal_date) b
+                 ON a.user_id = b.user_id 
+                 AND a.first_sub_date = b.first_sub_date
+           ) s
+      WHERE d.snapshot_date BETWEEN s.sub_renewal_date AND s.sub_end_date ) a
+GROUP BY 1, 2, 3
+ORDER BY 1, 2, 3;
+
+-------------------------------------------------------------------------------------------------------------
+
+/* Step 2. Using created VIEW, get retention */
+
+-- CREATE VIEW cohort_subscriptions_retention AS
+
+SELECT a.snapshot_date,
+       a.cohort_month,
+       DATEDIFF('MONTH', a.snapshot_date, b.cohort_month) AS n_month
+       b.n_starting_subs AS up_for_renewal_subs,
+       a.n_subs AS retained_sub
+FROM subscriptions_cohort a
+LEFT JOIN
+  (SELECT cohort_month,
+          n_subs AS n_starting_subs
+  FROM subscriptions_cohort
+  WHERE cohort_month = date_trunc('MONTH', snapshot_date)
+     ) b
+     ON a.cohort_month = b.cohort_month; 
