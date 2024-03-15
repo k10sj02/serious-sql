@@ -15,7 +15,7 @@
    - Analyzed that 54.5% of days had a higher close price than the open price, indicating bullish market sentiments.
 
 4. **Price Range Analysis:**
-   - - Identified the largest difference between the high and low prices on 2021-02-23, which was 8914.339844, indicating significant intraday volatility.
+   - - Identified the largest difference between the high and low prices on 2021-02-23, which was $8,914.339844, indicating significant intraday volatility.
 
 5. **Investment Performance Analysis:**
    - Calculated that if you had invested $10,000 on 1st January 2016, your investment would be worth $772,151.72 as of 1st February 2021, representing a 7621.52% increase.
