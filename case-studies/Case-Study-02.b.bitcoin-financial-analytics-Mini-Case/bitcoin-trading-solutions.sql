@@ -1,4 +1,4 @@
--- Look at the dataset
+-- Look at the dataset (EDA)
 
 SELECT
   *
@@ -21,12 +21,52 @@ FROM
   
 -- What was the historic all-time high and low values for the close_price and their dates?
 
+-- SOLUTION 1 (with subqueries) --
+
 SELECT
   market_date,
-  high_price,
-  low_price
+  close_price AS extreme_price,
+  'Highest' AS price_type
 FROM
-  trading.daily_btc;
+  trading.daily_btc
+WHERE
+  close_price = (SELECT MAX(close_price) FROM trading.daily_btc)
+
+UNION
+
+SELECT
+  market_date,
+  close_price AS extreme_price,
+  'Lowest' AS price_type
+FROM
+  trading.daily_btc
+WHERE
+  close_price = (SELECT MIN(close_price) FROM trading.daily_btc);
+
+
+-- SOLUTION 2 --
+
+(
+SELECT
+    market_date,
+    close_price
+FROM
+    trading.daily_btc
+ORDER BY
+    close_price DESC NULLS LAST
+LIMIT 1
+)
+UNION
+(
+SELECT
+    market_date,
+    close_price
+FROM
+    trading.daily_btc
+ORDER BY
+    close_price
+LIMIT 1
+);
 
 -- Run query to see table.
 
