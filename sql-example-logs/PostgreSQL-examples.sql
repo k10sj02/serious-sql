@@ -1,5 +1,9 @@
 -- This file contains example queries in PostgreSQL dialect.
 
+-------------------------------
+   ---- COHORT ANALYSIS ----
+-------------------------------
+
 # Has anyone ever made a cohort analysis pivot table on a quarterly rather than monthly basis?
 # I'm working on that in SQL (MySQL 5.7.12) and I can get each of the quarters (Q2 '23, Q3 '23, etc.) 
 # in the column label, but I'm actually wondering now if each of the instances across the row headers should represent billing months or billing quarters## The only reason I'm making this quarterly cohort analysis anyway is because a client asked for it 
@@ -22,7 +26,11 @@ FROM
 GROUP BY
     1, 2, 3;
 
+-------------------------------------------------
+   ---- RUNNING TOTALS & CUMULATIVE SUMS ----
+--------------------------------------------------
 
+-- Solution using self-joins
 -- Explanation: This SQL query calculates a cumulative sum of the volume column by adding the previous volume amounts to a running total.
 
 -- Define a common table expression (CTE) named 'cum_sum' to select the market_date and volume from the 'updated_daily_btc' table, ordered by market_date, and limit the result to 10 rows.
@@ -50,3 +58,23 @@ joined with all the rows in t2 where the market_date value in t1 is greater than
 market_date value in t2.*/
 GROUP BY 1,2
 ORDER BY 1,2;
+
+-- Solution using window functions
+-- Explanation: This SQL query calculates the cumulative sum of the 'volume' column from the 'updated_daily_btc' table for the first 10 rows, ordered by 'market_date'.
+
+-- Define a Common Table Expression (CTE) named 'volume_data' to select the 'market_date' and 'volume' columns from the 'updated_daily_btc' table, ordering them by 'market_date', and limiting the result to the first 10 rows.
+WITH volume_data AS (
+  SELECT
+    market_date,
+    volume
+  FROM updated_daily_btc
+  ORDER BY market_date
+  LIMIT 10
+)
+
+-- Select the 'market_date' and 'volume' columns from the 'volume_data' CTE, and calculate the cumulative sum of the 'volume' column using a window function.
+SELECT
+  market_date,
+  volume,
+  SUM(volume) OVER (ORDER BY market_date) AS cumulative_sum
+FROM volume_data;
