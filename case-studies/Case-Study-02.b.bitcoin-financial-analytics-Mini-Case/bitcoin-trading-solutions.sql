@@ -68,7 +68,10 @@ ORDER BY
 LIMIT 1
 );
 
--- Run query to see table.
+-- market_date   | close_price
+-- --------------------------
+-- 2015-01-14    | 178.102997
+-- 2021-02-21    | 57539.945313
 
 -- Which date had the most volume traded and what was the close_price for that day?
 
@@ -94,8 +97,7 @@ SELECT market_date,
 FROM trading.daily_btc
 WHERE volume = (SELECT MAX(volume) FROM trading.daily_btc);
   
-  
--- The market date with the highest volume traded is 2021-01-11 with a volume of 123,320,567,399 bitcoins traded.
+-- The market date with the highest volume traded is 2021-01-11 with a volume of 123,320,567,399 bitcoins traded and a close price of $35566.66.
 
 -- How many days had a low_price price which was 10% less than the open_price?
 
