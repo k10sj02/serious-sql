@@ -42,5 +42,9 @@ SELECT
 FROM cum_sum t1
 INNER JOIN cum_sum t2
 ON t1.market_date >= t2.market_date
+*/The ON t1.market_date >= t2.market_date line in the SQL query specifies the condition for joining 
+the two instances of the cum_sum CTE (common table expression) named t1 and t2.
+In this specific context, t1.market_date >= t2.market_date ensures that for each row in t1, it is 
+joined with all the rows in t2 where the market_date value in t1 is greater than or equal to the market_date value in t2.*/
 GROUP BY 1,2
 ORDER BY 1,2;
