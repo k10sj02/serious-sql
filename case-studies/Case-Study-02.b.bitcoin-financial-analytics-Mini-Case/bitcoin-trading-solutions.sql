@@ -99,7 +99,8 @@ WHERE volume = (SELECT MAX(volume) FROM trading.daily_btc);
   
 -- The market date with the highest volume traded is 2021-01-11 with a volume of 123,320,567,399 bitcoins traded and a close price of $35566.66.
 
--- How many days had a low_price price which was 10% less than the open_price?
+-- How many days had a `low_price` price which was 10% less than the `open_price` 
+-- what percentage of the total number of trading days is this rounded to the nearest integer?
 
 SELECT
   COUNT(market_date) AS num_days_with_10_percent_less_low_price
@@ -107,8 +108,25 @@ FROM
   trading.daily_btc
 WHERE
   low_price <= 0.9 * open_price;
+
+WITH cte AS (
+  SELECT
+    SUM(
+        CASE
+        WHEN low_price < 0.9 * open_price THEN 1
+        ELSE 0
+        END
+) AS low_days,
+    COUNT(*) AS total_days
+    FROM trading.daily_btc
+    WHERE volume IS NOT NULL
+)
+  SELECT
+      low_days,
+      ROUND(100 * low_days / total_days) AS _percentage
+      FROM cte;
   
--- 79 days have a low_price price which was 10% less than the open price.
+-- 79 days have a low_price price which was 10% less than the open price i.e. 3% of trading days have a price lower than the open_price.
 
   -- What percentage of days have a higher close_price than open_price?
 
