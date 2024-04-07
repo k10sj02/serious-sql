@@ -142,11 +142,11 @@ WITH btc_price_history AS
 SELECT
   num_days_with_higher_close_price_than_open_price,
   (SELECT COUNT (*) FROM trading.daily_btc) AS total_days,
-  (num_days_with_higher_close_price_than_open_price :: FLOAT / (SELECT COUNT(*) FROM trading.daily_btc)) * 100 AS percentage
+  ROUND((num_days_with_higher_close_price_than_open_price :: FLOAT / (SELECT COUNT(*) FROM trading.daily_btc)) * 100) AS percentage
 FROM
   btc_price_history;
   
--- 54.5% of days have a higher close price than opening price.
+-- 55% of days have a higher close price than opening price.
 
 -- What was the largest difference between high_price and low_price and which date did it occur?
 
