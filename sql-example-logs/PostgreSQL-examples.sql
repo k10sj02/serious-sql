@@ -22,3 +22,25 @@ FROM
 GROUP BY
     1, 2, 3;
 
+
+-- Explanation: This SQL query calculates a cumulative sum of the volume column by adding the previous volume amounts to a running total.
+
+-- Define a common table expression (CTE) named 'cum_sum' to select the market_date and volume from the 'updated_daily_btc' table, ordered by market_date, and limit the result to 10 rows.
+WITH cum_sum AS (
+  SELECT
+    market_date,
+    volume
+  FROM updated_daily_btc
+  ORDER BY market_date
+  LIMIT 10
+)
+-- Select the market_date and volume columns from the 'cum_sum' CTE, and calculate the running total of volume by summing the volumes of all previous rows, using an inner join between 'cum_sum' aliased as 't1' and 't2' with a condition that market_date of 't1' is greater than or equal to market_date of 't2'.
+SELECT 
+  t1.market_date,
+  t1.volume,
+  SUM(t2.volume) AS running_total
+FROM cum_sum t1
+INNER JOIN cum_sum t2
+ON t1.market_date >= t2.market_date
+GROUP BY 1,2
+ORDER BY 1,2;
