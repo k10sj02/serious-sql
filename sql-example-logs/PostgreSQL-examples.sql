@@ -30,7 +30,7 @@ GROUP BY
    ---- RUNNING TOTALS & CUMULATIVE SUMS ----
 --------------------------------------------------
 
--- Solution using self-joins
+-- Solution #1 using self-joins
 -- Explanation: This SQL query calculates a cumulative sum of the volume column by adding the previous volume amounts to a running total.
 
 -- Define a common table expression (CTE) named 'cum_sum' to select the market_date and volume from the 'updated_daily_btc' table, ordered by market_date, and limit the result to 10 rows.
@@ -59,7 +59,7 @@ market_date value in t2.*/
 GROUP BY 1,2
 ORDER BY 1,2;
 
--- Solution using window functions
+-- Solution #2 using window functions
 -- Explanation: This SQL query calculates the cumulative sum of the 'volume' column from the 'updated_daily_btc' table for the first 10 rows, ordered by 'market_date'.
 
 -- Define a Common Table Expression (CTE) named 'volume_data' to select the 'market_date' and 'volume' columns from the 'updated_daily_btc' table, ordering them by 'market_date', and limiting the result to the first 10 rows.
