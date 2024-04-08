@@ -295,7 +295,7 @@ Output:
 | 40         | Chicago FC   | 0             |
 +------------+--------------+---------------+
 
-*\
+*/
 
 
 -- Drop Database if Exists
