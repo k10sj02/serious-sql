@@ -162,14 +162,12 @@ LIMIT 1;
 
 SELECT department_id, gross_revenue
 
-
-order_year	department_id		gross_revenue
-2023		1			250000			
-2023		2			300000
-2023		3			5000
-
-
---- DRAFT
+-------------------------------------------------
+-- order_year    department_id   gross_revenue --
+-- 2023          1               250000        --
+-- 2023          2               300000        --
+-- 2023          3               5000          --
+-------------------------------------------------
 	
 --- 2. Show three products with the highest volumne of sales: by quantity, by revenue
 
@@ -210,7 +208,7 @@ GROUP BY product.product_id, product_name
 ORDER BY order.quantity DESC
 LIMIT 3
 
-3. Show the above for the moving window of the past three days - METHOD 2
+-- 3. Show the above for the moving window of the past three days - METHOD 2
 
 SELECT product.product_id
 		product_name, 
@@ -222,3 +220,127 @@ WHERE transaction_time BETWEEN NOW() - INTERVAL '5 DAY'
 GROUP BY product.product_id, product_name
 ORDER BY order.quantity DESC
 LIMIT 3
+
+/*
+
+THIS CODE IS BORROWED FROM LEETCODE.COM
+
++---------------+----------+
+| Column Name   | Type     |
++---------------+----------+
+| team_id       | int      |
+| team_name     | varchar  |
++---------------+----------+
+team_id is the column with unique values of this table.
+Each row of this table represents a single football team.
+ 
+
+Table: Matches
+
++---------------+---------+
+| Column Name   | Type    |
++---------------+---------+
+| match_id      | int     |
+| host_team     | int     |
+| guest_team    | int     | 
+| host_goals    | int     |
+| guest_goals   | int     |
++---------------+---------+
+match_id is the column of unique values of this table.
+Each row is a record of a finished match between two different teams. 
+Teams host_team and guest_team are represented by their IDs in the Teams table (team_id), and they scored host_goals and guest_goals goals, respectively.
+ 
+
+You would like to compute the scores of all teams after all matches. Points are awarded as follows:
+A team receives three points if they win a match (i.e., Scored more goals than the opponent team).
+A team receives one point if they draw a match (i.e., Scored the same number of goals as the opponent team).
+A team receives no points if they lose a match (i.e., Scored fewer goals than the opponent team).
+Write a solution that selects the team_id, team_name and num_points of each team in the tournament after all described matches.
+
+Return the result table ordered by num_points in decreasing order. In case of a tie, order the records by team_id in increasing order.
+
+The result format is in the following example.
+
+Example 1:
+
+Input: 
+Teams table:
++-----------+--------------+
+| team_id   | team_name    |
++-----------+--------------+
+| 10        | Leetcode FC  |
+| 20        | NewYork FC   |
+| 30        | Atlanta FC   |
+| 40        | Chicago FC   |
+| 50        | Toronto FC   |
++-----------+--------------+
+Matches table:
++------------+--------------+---------------+-------------+--------------+
+| match_id   | host_team    | guest_team    | host_goals  | guest_goals  |
++------------+--------------+---------------+-------------+--------------+
+| 1          | 10           | 20            | 3           | 0            |
+| 2          | 30           | 10            | 2           | 2            |
+| 3          | 10           | 50            | 5           | 1            |
+| 4          | 20           | 30            | 1           | 0            |
+| 5          | 50           | 30            | 1           | 0            |
++------------+--------------+---------------+-------------+--------------+
+Output: 
++------------+--------------+---------------+
+| team_id    | team_name    | num_points    |
++------------+--------------+---------------+
+| 10         | Leetcode FC  | 7             |
+| 20         | NewYork FC   | 3             |
+| 50         | Toronto FC   | 3             |
+| 30         | Atlanta FC   | 1             |
+| 40         | Chicago FC   | 0             |
++------------+--------------+---------------+
+
+*\
+
+
+-- Drop Database if Exists
+DROP DATABASE IF EXISTS FootballScoresDB;
+
+-- Create Database
+CREATE DATABASE FootballScoresDB;
+
+-- Drop the teams table with CASCADE option
+DROP TABLE IF EXISTS teams CASCADE;
+
+-- Create Teams Table
+CREATE TABLE teams (
+    team_id INT PRIMARY KEY,
+    team_name VARCHAR(255)
+);
+
+-- Insert Sample Data into Teams Table
+INSERT INTO teams (team_id, team_name)
+VALUES 
+    (10, 'Leetcode FC'),
+    (20, 'NewYork FC'),
+    (30, 'Atlanta FC'),
+    (40, 'Chicago FC'),
+    (50, 'Toronto FC');
+
+-- Drop the teams table with CASCADE option
+DROP TABLE IF EXISTS matches CASCADE;
+
+-- Create Matches Table
+CREATE TABLE matches (
+    match_id INT PRIMARY KEY,
+    host_team INT,
+    guest_team INT,
+    host_goals INT,
+    guest_goals INT,
+    FOREIGN KEY (host_team) REFERENCES teams(team_id),
+    FOREIGN KEY (guest_team) REFERENCES teams(team_id)
+);
+
+-- Insert Sample Data into Matches Table
+INSERT INTO matches (match_id, host_team, guest_team, host_goals, guest_goals)
+VALUES 
+    (1, 10, 20, 3, 0),
+    (2, 30, 10, 2, 2),
+    (3, 10, 50, 5, 1),
+    (4, 20, 30, 1, 0),
+    (5, 50, 30, 1, 0);
