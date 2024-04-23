@@ -72,9 +72,20 @@ WITH volume_data AS (
   LIMIT 10
 )
 
--- Select the 'market_date' and 'volume' columns from the 'volume_data' CTE, and calculate the cumulative sum of the 'volume' column using a window function.
+-- Selects 'market_date' and 'volume' from the 'volume_data' CTE, calculating the cumulative sum of 'volume' using a window function.
+
 SELECT
   market_date,
   volume,
   SUM(volume) OVER (ORDER BY market_date) AS cumulative_sum
 FROM volume_data;
+
+-- Enhances conciseness and readability by utilizing a WINDOW alias for the window function.
+
+SELECT
+  market_date,
+  volume,
+  SUM(volume) OVER rt
+FROM updated_daily_btc
+WINDOW rt 
+  AS (ORDER BY market_date);
