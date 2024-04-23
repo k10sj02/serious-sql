@@ -73,11 +73,12 @@ WITH volume_data AS (
 )
 
 -- Selects 'market_date' and 'volume' from the 'volume_data' CTE, calculating the cumulative sum of 'volume' using a window function.
+-- The optional RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW sets the window frame for the window function to include all rows from the beginning of the partition up to the current row, based on the ordering specified in the ORDER BY clause.
 
 SELECT
   market_date,
   volume,
-  SUM(volume) OVER (ORDER BY market_date) AS cumulative_sum
+  SUM(volume) OVER (ORDER BY market_date RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS cumulative_sum
 FROM volume_data;
 
 -- Enhances conciseness and readability by utilizing a WINDOW alias for the window function.
@@ -88,4 +89,4 @@ SELECT
   SUM(volume) OVER rt
 FROM updated_daily_btc
 WINDOW rt 
-  AS (ORDER BY market_date);
+  AS (ORDER BY market_date RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW);
