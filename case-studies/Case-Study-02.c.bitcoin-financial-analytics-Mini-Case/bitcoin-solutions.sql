@@ -1,0 +1,25 @@
+-- What is the average daily volume of Bitcoin for the last 7 days?
+-- Create a 1/0 flag if a specific day is higher than the last 7 days volume average
+
+WITH daily_volume_data AS (
+SELECT
+  market_date,
+  volume,
+  AVG(volume) OVER (ORDER BY market_date 
+                    RANGE BETWEEN '7 DAYS' PRECEDING AND '1 DAY' PRECEDING) AS past_weekly_avg_volume
+FROM updated_daily_btc
+)
+SELECT 
+  market_date,
+  volume,
+  CASE 
+    WHEN volume > past_weekly_avg_volume THEN 1
+    ELSE 0
+    END AS volume_flag
+FROM daily_volume_data
+ORDER BY market_date DESC
+LIMIT 10;
+
+/* This is a good example of a moving window. This allows us to perform calculations, such as averaging, 
+aggregating, or calculating trends, over a specific time period relative to each data point in the dataset, 
+providing valuable insights into the trends and patterns present in the data over time. */
