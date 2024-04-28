@@ -37,8 +37,9 @@ For example The volumes for the previous 7 days are:
 '2014-09-17': 21056800
 '2014-09-18': 34483200
 
-The average of these volumes is:
-(21056800+34483200)/2 = 27770000
+The average of these volumes is: (21056800+34483200)/2 = 27770000
+
+So, the past_weekly_avg_volume for '2014-09-18' would be 27770000.
 
 
 */
