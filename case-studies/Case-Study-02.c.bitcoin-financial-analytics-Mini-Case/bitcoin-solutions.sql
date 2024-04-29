@@ -27,7 +27,7 @@ providing valuable insights into the trends and patterns present in the data ove
 
 To calculate the past_weekly_avg_volume, we consider the volumes of the previous 7 days (including '2014-09-18' but excluding '2014-09-11', because we're calculating the average up to the day before '2014-09-18').
 
-For example The volumes for the previous 7 days are:
+For example, the volumes for the previous 7 days are:
 
 '2014-09-12': NULL (no data available for this day)
 '2014-09-13': NULL (no data available for this day)
