@@ -47,8 +47,8 @@ So, the past_weekly_avg_volume for '2014-09-18' would be 27770000.
 /* 11.4.2. Simple Moving Averages
 For the following time windows: 14, 28, 60, 150 days - calculate the following metrics for the close_price column:
 
-Moving average
-Moving standard deviation
-The maximum and minimum values
+1. Moving average
+2. Moving standard deviation
+3. The maximum and minimum values
 Additionally round all metrics to to the nearest whole number.
 */
