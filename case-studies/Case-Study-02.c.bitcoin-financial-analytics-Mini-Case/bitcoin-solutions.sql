@@ -1,4 +1,16 @@
 -- What is the average daily volume of Bitcoin for the last 7 days?
+
+WITH daily_volume_last7 AS (
+SELECT market_date, 
+        AVG(volume) AS avg_daily_volume
+FROM trading.daily_btc
+GROUP BY market_date
+ORDER BY market_date DESC
+LIMIT 7
+          )
+SELECT AVG(avg_daily_volume) AS seven_day_avg_volume
+FROM daily_volume_last7;
+
 -- Create a 1/0 flag if a specific day is higher than the last 7 days volume average
 
 WITH daily_volume_data AS (
@@ -52,3 +64,4 @@ For the following time windows: 14, 28, 60, 150 days - calculate the following m
 3. The maximum and minimum values
 Additionally round all metrics to to the nearest whole number.
 */
+
